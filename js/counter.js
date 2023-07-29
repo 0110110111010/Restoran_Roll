@@ -23,9 +23,29 @@ window.addEventListener('click', function(event){
 
 
     //Проверяем является ли элементом кнопкой-
-    if(event.target.dataset.action==="minus"){
+    if(event.target.dataset.action === "minus") {
+
      if (parseInt(counter.innerText) > 1){
+
      counter.innerText = --counter.innerText;
+     
+     //Проверка на товар в корзине
+    }else if(event.target.closest('.cart-wrapper') && parseInt(counter.innerText) === 1 ) {
+        
+        event.target.closest('.cart-item').remove();
+        
+        //Отображение статуса корзины (посто или заполнено)
+        toggleCartStatus();
+
+        calcCartPriceAndDelivery();
+
     }
-   }
+    
+}
+
+    if(event.target.hasAttribute('data-action') && event.target.closest('.cart-wrapper')){
+        
+        calcCartPriceAndDelivery();
+
+    }
 })  
